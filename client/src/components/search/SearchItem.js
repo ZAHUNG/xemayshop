@@ -9,9 +9,9 @@ const { AiOutlineDown } = icons
 const SearchItem = ({ name, activeClick, changeActiveFitler, type = 'checkbox' }) => {
     const navigate = useNavigate()
     const { category } = useParams()
-    const [selected, setSelected] = useState([])
+    const [selected, setSelected] = useState([]) // lưu các màu đã chọn 
     const [params] = useSearchParams()
-    const [price, setPrice] = useState({
+    const [price, setPrice] = useState({        // lưu khoảng giá 
         from: '',
         to: ''
     })

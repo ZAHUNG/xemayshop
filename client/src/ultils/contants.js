@@ -120,13 +120,13 @@ export const sorts = [
   },
   {
     id: 2,
-    value: "-title",
+    value: "title",
     text: "Alphabetically, A-Z",
   },
   {
     id: 3,
-    value: "title",
-    text: "Alphabetically, Z-A",
+    value: "-title",
+    text: "Alphabetically, Z-A",    
   },
   {
     id: 4,
