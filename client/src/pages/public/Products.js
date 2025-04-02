@@ -37,26 +37,32 @@ const Products = () => {
     if (response.success) setProducts(response)
   }
   useEffect(() => {
-    const queries = Object.fromEntries([...params])
-    let priceQuery = {}
-    if (queries.to && queries.from) {
-      priceQuery = {
-        $and: [
-          { price: { gte: queries.from } },
-          { price: { lte: queries.to } },
-        ],
+      const queries = Object.fromEntries([...params])
+      let priceQuery = {}
+      if (queries.to && queries.from) {
+        priceQuery = {
+          $and: [
+            { price: { gte: queries.from } },
+            { price: { lte: queries.to } },
+          ],
+        }
+        delete queries.price
+      } else {
+        if (queries.from) queries.price = { gte: queries.from }
+        if (queries.to) queries.price = { lte: queries.to }
       }
-      delete queries.price
-    } else {
-      if (queries.from) queries.price = { gte: queries.from }
-      if (queries.to) queries.price = { lte: queries.to }
-    }
 
-    delete queries.to
-    delete queries.from
-    const q = { ...priceQuery, ...queries }
-    fetchProductsByCategory(q)
-    window.scrollTo(0, 0)
+      delete queries.to
+      delete queries.from
+      const q = { ...priceQuery, ...queries }
+      fetchProductsByCategory(q)
+
+      setTimeout(() => {
+        document.getElementById('top-products').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }, 100);
   }, [params])
   const changeActiveFitler = useCallback(
     (name) => {
@@ -82,6 +88,7 @@ const Products = () => {
   }, [sort])
   return (
     <div className="w-full">
+      <div id="top-products"></div>
       <div className="h-[81px] flex justify-center items-center bg-gray-100">
         <div className="lg:w-main w-screen px-4 lg:px-0">
           <h3 className="font-semibold uppercase">{category}</h3>
